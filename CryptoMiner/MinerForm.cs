@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.IO;
+using CryptoMiner.ConsoleCommands;
+using CryptoMiner.ConsoleCommands.Commands;
 
 namespace CryptoMiner
 {
@@ -19,7 +21,7 @@ namespace CryptoMiner
             InitializeComponent();
         }
         //Variables
-        string welcomeString = File.ReadAllText(@"./welcomestring.txt");
+        string welcomeString = "Moino servus";  //File.ReadAllText(@"./welcomestring.txt");
         string typeWriteString;
         bool firstStart = true;
         int typeWriteIndex = 0;
@@ -33,19 +35,14 @@ namespace CryptoMiner
         public double hashes;
         private void MinerForm_Load(object sender, EventArgs e)
         {
-            SaveSettings saveSettings = new SaveSettings();
-            List<string> settings = File.ReadAllLines(@"./settings.txt").ToList();
-            List<string> settings2 = new List<string>();
-            foreach(string s in settings)
-            {
-                List<string> temp = s.Split(';').ToList();
-                settings2.Add(temp[1]);
-            }
-            if (settings2[0] == "False") { tutorial = false; saveSettings.tutorial = "False"; }
-            else { tutorial = true; saveSettings.tutorial = "True"; }
+            SaveSettings.Load();
+            CommandManager.AddCommand(new CommandStartMiner());
+            tutorial = SaveSettings._settings.tutorialFinished;
+            cryptoWallet = SaveSettings._settings.cryptoWallet;
             timer1.Interval = 40;
             timer1.Start();
         }
+
         private void TypeWriteInConsole(string stringToWrite)
         {
             minerConsoleBox.ReadOnly = true;
@@ -85,7 +82,11 @@ namespace CryptoMiner
         {
             if(e.KeyChar == 13)
             {
-                if(minerConsoleBox.Text.Contains("Miner.Start();"))
+                CommandManager.VerifyCommand(CommandManager.GetCommandByName(minerConsoleBox.Text));
+                
+
+                /*
+                if (minerConsoleBox.Text.Contains("Miner.Start();"))
                 {
                     minerConsoleBox.Text = "";
                     isMining = true;
@@ -103,18 +104,16 @@ namespace CryptoMiner
                 {
                     if (tutorial == true) { tutorial = false; }
                     else { tutorial = true; }
-                    var savesettings = new SaveSettings();
-                    savesettings.tutorial = this.tutorial.ToString();
-                    savesettings.WriteSettingsFile();
+                    SaveSettings._settings.tutorialFinished = this.tutorial;
+                    SaveSettings.Save();
                     TypeWriteInConsole("Intro toggled");
                 }
                 else if(minerConsoleBox.Text.Contains("Console.Close();"))
                 {
                     MinerForm minerForm = new MinerForm();
-                    SaveSettings saveSettings = new SaveSettings();
-                    saveSettings.tutorial = this.tutorial.ToString();
-                    saveSettings.cryptoWallet = this.cryptoWallet;
-                    saveSettings.WriteSettingsFile();
+                    SaveSettings._settings.tutorialFinished = this.tutorial;
+                    SaveSettings._settings.cryptoWallet = this.cryptoWallet;
+                    SaveSettings.Save();
                     minerConsoleBox.Text = "";
                     TypeWriteInConsole("Goodbye ;)");
                     minerTimer.Stop();
@@ -139,6 +138,7 @@ namespace CryptoMiner
                     minerConsoleBox.Text = "";
                     minerConsoleBox.Text = "Miner : " + tutorial.ToString();
                 }
+                */
             }
         }
 
@@ -166,6 +166,11 @@ namespace CryptoMiner
                     cryptoWallet += 0.000001;
                 }
             }
+        }
+
+        private void minerConsoleBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

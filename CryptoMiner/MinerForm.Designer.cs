@@ -47,6 +47,7 @@
             this.minerConsoleBox.ReadOnly = true;
             this.minerConsoleBox.Size = new System.Drawing.Size(776, 426);
             this.minerConsoleBox.TabIndex = 0;
+            this.minerConsoleBox.TextChanged += new System.EventHandler(this.minerConsoleBox_TextChanged);
             this.minerConsoleBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.minerConsoleBox_KeyPress);
             // 
             // timer1
