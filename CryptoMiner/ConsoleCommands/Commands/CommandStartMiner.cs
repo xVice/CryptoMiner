@@ -13,9 +13,10 @@ namespace CryptoMiner.ConsoleCommands.Commands
 
         public string Description => "Starts the miner";
 
-        public void Execute()
+        public void Execute(MinerForm console)
         {
-            MessageBox.Show("Command triggered", "Commands!");
+            console.TypeWriteInConsole("Miner starting.");
+            console.miner.StartMiner();
         }
     }
 }

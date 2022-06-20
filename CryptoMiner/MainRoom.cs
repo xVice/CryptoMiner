@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace CryptoMiner
 {
-    public partial class serverroom : Form
+    public partial class MainRoom : Form
     {
-        public serverroom()
+        public MainRoom()
         {
             InitializeComponent();
         }
@@ -25,6 +25,22 @@ namespace CryptoMiner
         private void pictureBox2_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DesktopForm deskForm = new DesktopForm();
+            deskForm.Show();
+        }
+
+        private void pictureBox10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            SaveSettings.Load();
         }
     }
 }

@@ -85,6 +85,7 @@
             this.cryptoMinerButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.cryptoMinerButton.TabIndex = 2;
             this.cryptoMinerButton.TabStop = false;
+            this.cryptoMinerButton.Click += new System.EventHandler(this.cryptoMinerButton_Click);
             this.cryptoMinerButton.DoubleClick += new System.EventHandler(this.cryptoMinerButton_DoubleClick);
             // 
             // dragPanel

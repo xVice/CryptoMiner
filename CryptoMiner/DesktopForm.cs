@@ -48,7 +48,12 @@ namespace CryptoMiner
 
         private void shutdownButton_Click(object sender, EventArgs e)
         {
-            Environment.Exit(0);
+            this.Close();
+        }
+
+        private void cryptoMinerButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

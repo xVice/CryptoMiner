@@ -55,8 +55,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleCommands\CommandManager.cs" />
+    <Compile Include="ConsoleCommands\Commands\CommandHelp.cs" />
+    <Compile Include="ConsoleCommands\Commands\CommandMinerStatus.cs" />
+    <Compile Include="ConsoleCommands\Commands\CommandMinerStop.cs" />
     <Compile Include="ConsoleCommands\Commands\CommandStartMiner.cs" />
+    <Compile Include="ConsoleCommands\Commands\CommandWallet.cs" />
     <Compile Include="ConsoleCommands\Commands\ICommand.cs" />
+    <Compile Include="Miner\Miner.cs" />
+    <Compile Include="MiningShelfForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MiningShelfForm.Designer.cs">
+      <DependentUpon>MiningShelfForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SaveSettings.cs" />
     <Compile Include="DesktopForm.cs">
       <SubType>Form</SubType>
@@ -78,12 +89,13 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="serverroom.cs">
+    <Compile Include="MainRoom.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="serverroom.Designer.cs">
-      <DependentUpon>serverroom.cs</DependentUpon>
+    <Compile Include="MainRoom.Designer.cs">
+      <DependentUpon>MainRoom.cs</DependentUpon>
     </Compile>
+    <Compile Include="Wallet\Wallet.cs" />
     <EmbeddedResource Include="ComputerStatsForm.resx">
       <DependentUpon>ComputerStatsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -92,6 +104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MinerForm.resx">
       <DependentUpon>MinerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MiningShelfForm.resx">
+      <DependentUpon>MiningShelfForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -103,8 +118,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="serverroom.resx">
-      <DependentUpon>serverroom.cs</DependentUpon>
+    <EmbeddedResource Include="MainRoom.resx">
+      <DependentUpon>MainRoom.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -122,6 +137,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Images\serveroom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\computer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\wrench_48px.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

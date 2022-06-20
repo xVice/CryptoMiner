@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace CryptoMiner.ConsoleCommands.Commands
 {
     public interface ICommand
-    {
+    { 
         string Name { get; }
         string Description { get; }
-        
-        void Execute();
+
+        void Execute(MinerForm console);
     }
 }

@@ -11,12 +11,23 @@ namespace CryptoMiner.ConsoleCommands
     {
         public static List<ICommand> commandList = new List<ICommand>();
 
-        public static void VerifyCommand(ICommand command)
+        public static void VerifyCommand(ICommand command, MinerForm console)
         {
             if (command != null)
             {
-                command.Execute();
+                command.Execute(console);
             }
+        }
+
+        public static void LoadDefaultCommands()
+        {
+            CommandManager.AddCommand(new CommandStartMiner());
+            CommandManager.AddCommand(new CommandMinerStop());
+            CommandManager.AddCommand(new CommandHelp());
+            CommandManager.AddCommand(new CommandWallet());
+            CommandManager.AddCommand(new CommandMinerStatus());
+
+
         }
 
         public static void AddCommand(ICommand command)

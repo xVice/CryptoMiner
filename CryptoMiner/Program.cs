@@ -16,7 +16,7 @@ namespace CryptoMiner
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new DesktopForm());
+            Application.Run(new MainRoom());
         }
     }
 }

@@ -27,23 +27,26 @@ namespace CryptoMiner
         int typeWriteIndex = 0;
         bool tutorial;
 
-        public bool isMining;
         public double cryptoWallet;
+
+        public Wallet.Wallet wallet = new Wallet.Wallet();
+        public Miner.Miner miner;
+
         public List<string> miningRigStats = new List<string>();
         public double hashRate = 40;
         public double tenthCoinHashCost = 1200;
         public double hashes;
         private void MinerForm_Load(object sender, EventArgs e)
         {
-            SaveSettings.Load();
-            CommandManager.AddCommand(new CommandStartMiner());
+            CommandManager.LoadDefaultCommands();
+            miner = new Miner.Miner(wallet, 40);
             tutorial = SaveSettings._settings.tutorialFinished;
             cryptoWallet = SaveSettings._settings.cryptoWallet;
             timer1.Interval = 40;
             timer1.Start();
         }
 
-        private void TypeWriteInConsole(string stringToWrite)
+        public void TypeWriteInConsole(string stringToWrite)
         {
             minerConsoleBox.ReadOnly = true;
             typeWriteString = stringToWrite;
@@ -51,6 +54,17 @@ namespace CryptoMiner
             timer2.Interval = 40;
             timer2.Start();
         }
+
+        public void Clear()
+        {
+            minerConsoleBox.Text = null;
+        }
+
+        public void SetText(string text)
+        {
+            minerConsoleBox.Text = text;
+        }
+
         private void timer1_Tick(object sender, EventArgs e)
         {          
             if(tutorial == true)
@@ -82,8 +96,15 @@ namespace CryptoMiner
         {
             if(e.KeyChar == 13)
             {
-                CommandManager.VerifyCommand(CommandManager.GetCommandByName(minerConsoleBox.Text));
-                
+                if(CommandManager.GetCommandByName(minerConsoleBox.Text) != null)
+                {
+                    CommandManager.VerifyCommand(CommandManager.GetCommandByName(minerConsoleBox.Text), this);
+                    minerConsoleBox.Text = "";
+                }
+                else
+                {
+                    TypeWriteInConsole("The Command " + minerConsoleBox.Text + " was not found!");
+                }
 
                 /*
                 if (minerConsoleBox.Text.Contains("Miner.Start();"))
@@ -120,24 +141,6 @@ namespace CryptoMiner
                     isMining = false;
                     this.Close();
                 }
-                else if (minerConsoleBox.Text.Contains("Console.Help();"))
-                {
-                    List<string> commandList = File.ReadLines(@"./commands.txt").ToList();
-                    string commandlist = "";
-                    foreach(string command in commandList)
-                    {
-                        commandlist += command;
-                        commandlist += Environment.NewLine;
-                    }
-                    minerConsoleBox.Text = "";
-                    isMining = false;
-                    TypeWriteInConsole(commandlist);
-                }
-                else if(minerConsoleBox.Text.Contains("Miner.Status();"))
-                {
-                    minerConsoleBox.Text = "";
-                    minerConsoleBox.Text = "Miner : " + tutorial.ToString();
-                }
                 */
             }
         }
@@ -152,25 +155,6 @@ namespace CryptoMiner
                 minerConsoleBox.ReadOnly = false;
                 typeWriteIndex = 0;
             }
-        }
-
-        private void minerTimer_Tick(object sender, EventArgs e)
-        {
-            if(isMining == true)
-            {
-                hashes += hashRate;  
-                if(hashes > tenthCoinHashCost)
-                {
-                    MessageBox.Show(hashes.ToString());
-                    hashes = 0;
-                    cryptoWallet += 0.000001;
-                }
-            }
-        }
-
-        private void minerConsoleBox_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
